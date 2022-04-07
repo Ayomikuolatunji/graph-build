@@ -2,7 +2,8 @@ module.exports={
     hello(){
         return {
             text:" Hello World",
-            veiws: 100
+            views: 100,
+            name:"Ayomiku",
         }
     }
 }
