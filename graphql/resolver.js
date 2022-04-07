@@ -16,7 +16,7 @@ module.exports={
         !validator.isLength(password,{min:5})){
           errors.push({message:"password must not be empty and must greater than 5"})
        }
-       if(error.length>0){
+       if(errors.length>0){
            const error=new Error("invalid input")
            error.data=errors;
            error.code=422
