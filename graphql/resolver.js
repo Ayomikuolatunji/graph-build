@@ -19,5 +19,6 @@ module.exports={
            password:password
        })
        const createdUser=await user.save()
+       return {...createdUser._doc,_id:createdUser._id.toString()}
    }
 }
