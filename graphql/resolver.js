@@ -12,7 +12,7 @@ module.exports={
            const error=new Error("user already exits")
            throw error
        }
-       const hashPwd=await bcrypt(password, 12)
+       const hashPwd=await bcrypt.hash(password, 12)
        const user=new User({
            email:email,
            name:name,
@@ -20,5 +20,8 @@ module.exports={
        })
        const createdUser=await user.save()
        return {...createdUser._doc,_id:createdUser._id.toString()}
+   },
+   name(){
+       return "String"
    }
 }
