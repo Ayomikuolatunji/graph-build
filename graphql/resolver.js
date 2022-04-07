@@ -2,7 +2,7 @@ const bcrypt=require("bcryptjs")
 const User=require("../models/user")
 
 module.exports={
-   createdUser: async({userInput},req)=>{
+   createUser: async({userInput},req)=>{
        const email=userInput.email
        const name=userInput.name
        const password=userInput.password
@@ -12,5 +12,12 @@ module.exports={
            const error=new Error("user already exits")
            throw error
        }
+       const hashPwd=await bcrypt(password, 12)
+       const user=new User({
+           email:email,
+           name:name,
+           password:password
+       })
+       const createdUser=await user.save()
    }
 }
