@@ -1,5 +1,7 @@
 const bcrypt=require("bcryptjs")
 const User=require("../models/user")
+const Post=require("../models/post")
+const validator=require("validator")
 
 module.exports={
    createUser: async({userInput},req)=>{
@@ -16,12 +18,25 @@ module.exports={
        const user=new User({
            email:email,
            name:name,
-           password:password
+           password:hashPwd
        })
        const createdUser=await user.save()
        return {...createdUser._doc,_id:createdUser._id.toString()}
    },
    name(){
        return "String"
+   },
+   createPost: async({userPost}, req)=>{
+      const title=userPost.title
+      const content=userPost.content
+      const imageUrl=userPost.imageUrl
+
+      const post=new Post({
+          title:title,
+          content:content,
+          imageUrl:imageUrl
+      })
+      const postCreated=await post.save()
+      return {...postCreated._doc, _id:postCreated._id.toString()}
    }
 }
