@@ -1,12 +1,11 @@
 const path = require('path');
-
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const multer = require('multer');
-
-// const feedRoutes = require('./routes/feed');
-// const authRoutes = require('./routes/auth');
+var { graphqlHTTP } = require('express-graphql')
+const graphSchema=require("./graphql/schema")
+const graphqlResolver=require("./graphql/resolver")
 
 const app = express();
 
@@ -50,7 +49,11 @@ app.use((req, res, next) => {
 
 // app.use('/feed', feedRoutes);
 // app.use('/auth', authRoutes);
-
+app.use("/graphql",graphqlHTTP({
+  schema:graphSchema,
+  rootValue:graphqlResolver,
+  graphiql: true,
+}))
 app.use((error, req, res, next) => {
   console.log(error);
   const status = error.statusCode || 500;

@@ -1,10 +1,8 @@
-const {buildSchema}=require("graphql")
-
-module.exports=buildSchema(`
-   type RootQuery {
-       hello : String !
-   }
-    schema {
-       query: RootQuery 
+module.exports={
+    hello(){
+        return {
+            text:" Hello World",
+            veiws: 100
+        }
     }
-`)
+}
