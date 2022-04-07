@@ -8,16 +8,19 @@ module.exports={
        const email=userInput.email
        const name=userInput.name
        const password=userInput.password
-       const error=[]
-       if(validator.isEmail(email)){
-           error.push({message:"email is invalid"})
+       const errors=[]
+       if(!validator.isEmail(email)){
+           errors.push({message:"email is invalid"})
        }
        if(validator.isEmpty(password) || 
         !validator.isLength(password,{min:5})){
-          error.push({message:"password must not be empty and must greater than 5"})
+          errors.push({message:"password must not be empty and must greater than 5"})
        }
        if(error.length>0){
-           throw new Error("invalid input")
+           const error=new Error("invalid input")
+           error.data=errors;
+           error.code=422
+           throw error
        }
        const exitingUser=await User.findOne({email:email})
        if(exitingUser){
