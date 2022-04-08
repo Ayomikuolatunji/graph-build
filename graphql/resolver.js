@@ -74,6 +74,7 @@ module.exports = {
       ) {
         errors.push({ message: 'Title is invalid.' });
       }
+      console.log(req._id)
       if (
         validator.isEmpty(postInput.content) ||
         !validator.isLength(postInput.content, { min: 5 })
