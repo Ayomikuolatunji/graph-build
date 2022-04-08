@@ -61,6 +61,32 @@ module.exports = {
     );
     return { token: token, userId: user._id.toString() };
   },
+  createPost:async({postInput},req)=>{
+    //    const errors=[]
+    //    if(validator.isEmpty(title) || validator.isEmpty(content) || validator.imageUrl){
+    //        errors.push({message:"no input must be empty"})
+    //    }
+    //    if(!validator.isLength(title,{min:5}) || !validator.isLength(title,{min:1})){
+    //        errors.push({message:"post must have length character"})
+    //    }
+    //    if(errors.length>0){
+    //        const error=new Error("Hey with input")
+    //        error.data=errors
+    //        throw error
+    //    }
+       const post = new Post({
+        title: postInput.title,
+        content: postInput.content,
+        imageUrl: postInput.imageUrl,
+       });
+       createdPost=await post.save()
+        return {
+        ...createdPost._doc,
+        _id: createdPost._id.toString(),
+        createdAt: createdPost.createdAt.toISOString(),
+        updatedAt: createdPost.updatedAt.toISOString()
+        };
+  }
 
 };
 //   createPost: async function({ postInput }, req) {
