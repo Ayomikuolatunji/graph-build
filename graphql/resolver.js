@@ -36,7 +36,7 @@ module.exports={
        const createdUser=await user.save()
        return {...createdUser._doc,_id:createdUser._id.toString()}
    },
-   name(){
+   login(){
        return "String"
    },
    createPost: async({userPost}, req)=>{
