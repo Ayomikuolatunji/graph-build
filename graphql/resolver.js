@@ -62,7 +62,7 @@ module.exports = {
     return { token: token, userId: user._id.toString() };
   },
   createPost:async({postInput},req)=>{
-    if (!req.isAuth) {
+      if (!req.isAuth) {
         const error = new Error('Not authenticated!');
         error.code = 401;
         throw error;
@@ -96,7 +96,7 @@ module.exports = {
         title: postInput.title,
         content: postInput.content,
         imageUrl: postInput.imageUrl,
-        creator: user._id
+        creator: user
       });
       const createdPost = await post.save();
       user.posts.push(createdPost);
