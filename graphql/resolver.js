@@ -62,11 +62,11 @@ module.exports = {
     return { token: token, userId: user._id.toString() };
   },
   createPost:async({postInput},req)=>{
-    // if (!req.isAuth) {
-    //     const error = new Error('Not authenticated!');
-    //     error.code = 401;
-    //     throw error;
-    //   }
+    if (!req.isAuth) {
+        const error = new Error('Not authenticated!');
+        error.code = 401;
+        throw error;
+      }
       const errors = [];
       if (
         validator.isEmpty(postInput.title) ||
@@ -96,7 +96,7 @@ module.exports = {
         title: postInput.title,
         content: postInput.content,
         imageUrl: postInput.imageUrl,
-        creator: user
+        creator: user._id
       });
       const createdPost = await post.save();
       user.posts.push(createdPost);
@@ -107,6 +107,4 @@ module.exports = {
         updatedAt: createdPost.updatedAt.toISOString()
       };
     }
-  
-
 };
