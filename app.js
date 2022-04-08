@@ -6,7 +6,7 @@ const multer = require('multer');
 var { graphqlHTTP } = require('express-graphql')
 const graphSchema=require("./graphql/schema")
 const graphqlResolver=require("./graphql/resolver")
-
+const cors=require("cors")
 const app = express();
 
 const fileStorage = multer.diskStorage({
@@ -46,7 +46,7 @@ app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
   next();
 });
-
+app.use(cors()) 
 // app.use('/feed', feedRoutes);
 // app.use('/auth', authRoutes);
 app.use("/graphql",graphqlHTTP({
