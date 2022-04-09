@@ -108,12 +108,14 @@ module.exports = {
       updatedAt: createdPost.updatedAt.toISOString()
     };
   },
-   posts:async(args, req)=>{
+   posts:async({page}, req)=>{
     if (!req.isAuth) {
       const error = new Error('Not authenticated!');
       error.code = 401;
       throw error;
     }
+    if(page) page=1
+    const perPage=3
     const totalPosts=await Post.find().countDocuments();
     const posts=await Post.find().sort({createdAt:-1}).populate("creator")
     return {
