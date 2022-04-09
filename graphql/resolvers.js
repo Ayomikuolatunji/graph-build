@@ -135,5 +135,12 @@ module.exports = {
       }),
       totalPosts: totalPosts
     };
+  },
+  post:async({id},req)=>{
+    if (!req.isAuth) {
+      const error = new Error('Not authenticated!');
+      error.code = 401;
+      throw error;
+    }
   }
 };
