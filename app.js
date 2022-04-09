@@ -1,4 +1,5 @@
 const path = require('path');
+const fs=require("fs")
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
@@ -31,6 +32,15 @@ const fileFilter = (req, file, cb) => {
   }
 };
 
+app.put((req,res,next)=>{
+    if(!req.file){
+      res.status(200).json({message:"file not uploaded"})
+    }
+    if(req.body.oldPath){
+      clearImage()
+    }
+    res.status(201).json({message:"file uploaded",filePath:req.file.path})
+})
 // app.use(bodyParser.urlencoded()); // x-www-form-urlencoded <form>
 app.use(bodyParser.json()); // application/json
 app.use(
@@ -91,3 +101,9 @@ mongoose
   .catch(err => {
     console.log(err);
 });
+
+
+const clearImage = filePath => {
+  filePath = path.join(__dirname, '..', filePath);
+  fs.unlink(filePath, err => console.log(err));
+};
