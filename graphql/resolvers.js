@@ -142,5 +142,18 @@ module.exports = {
       error.code = 401;
       throw error;
     }
+
+    const post=await Post.findById(id).populate("creator")
+    if(!post){
+        const error=new Error("no post found with the id provided")
+        error.code=404
+        throw error
+    }
+     return {
+       ...post._doc,
+       _id:post._id.toString(),
+       createdAt:post.createdAt.toISOString(),
+       updatedAt:post.updatedAt.toISOString()
+     }
   }
 };
