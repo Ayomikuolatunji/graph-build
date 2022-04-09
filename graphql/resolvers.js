@@ -136,7 +136,7 @@ module.exports = {
       totalPosts: totalPosts
     };
   },
-  post:async({id},req)=>{
+  post:async({id,postInput},req)=>{
     if (!req.isAuth) {
       const error = new Error('Not authenticated!');
       error.code = 401;
@@ -155,5 +155,23 @@ module.exports = {
        createdAt:post.createdAt.toISOString(),
        updatedAt:post.updatedAt.toISOString()
      }
-  }
+  },
+  updatePost:async({id, postInput},req)=>{
+    if (!req.isAuth) {
+      const error = new Error('Not authenticated!');
+      error.code = 401;
+      throw error;
+    }
+    const post=await Post.findById(id).populate("creator")
+    if(!post){
+        const error=new Error("no post found with the id provided")
+        error.code=404
+        throw error
+    }
+    if(post.creator._id.toString !==req.userId.toString()){
+        const error = new Error('Not authorized!');
+        error.statusCode = 403;
+        throw error;
+    } 
+  } 
 };
