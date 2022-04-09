@@ -192,5 +192,19 @@ module.exports = {
       error.code = 422;
       throw error;
     }
+    post.title=postInput.title
+    post.content=postInput.content
+    if(post.imageUrl !=="undefined"){
+      post.imageUrl=postInput.imageUrl
+    }
+
+    const updatedPost=await post.save()
+
+    return {
+      ...updatedPost._doc,
+      _id:updatedPost._id.toString(),
+      createdAt:updatedPost.createdAt.toISOString(),
+      updatedAt:updatedPost.updatedAt.toISOString()
+    }
   } 
 };
